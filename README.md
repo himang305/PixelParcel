@@ -2,6 +2,8 @@
 
 Welcome to **PixelParcel**, the Web3-powered land claiming platform where the world is divided into pixelated parcels. Users can **claim**, **release**, and **swap** land tiles — all stored securely on-chain.
 
+🔗 **Try it live:** [PixelParcel Demo](https://himang305.github.io/PixelParcel/)
+
 ---
 
 ## 🚀 Overview
