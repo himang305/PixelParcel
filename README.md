@@ -2,6 +2,8 @@
 
 Welcome to **PixelParcel**, the Web3-powered land claiming platform where the world is divided into pixelated parcels. Users can **claim**, **release**, and **swap** land tiles — all stored securely on-chain.
 
+![Screenshot](https://raw.githubusercontent.com/himang305/PixelParcel/refs/heads/main/shot.png)
+
 🔗 **Try it live:** [PixelParcel Demo](https://himang305.github.io/PixelParcel/)
 
 ---
@@ -30,11 +32,19 @@ Each location is mapped to **2-decimal precision**, creating a grid system that 
 
 ---
 
+## 🔗 Blockchain Info
+
+- **Chain**: WEMIX Testnet
+- **Smart Contract Address**: `0x89dE61BFC5023d99f334B9659381267Be6dfb88B`
+- **Wallet Requirement**: Please use **MetaMask Desktop** for proper functionality.
+
+---
+
 ## 🔧 Tech Stack
 
 - **Frontend**: JavaScript, Leaflet.js (Map), what3words API
 - **Smart Contract**: Solidity
-- **Blockchain**: Ethereum-compatible network (Polygon, Base, or others)
+- **Blockchain**: Ethereum-compatible network (WEMIX Testnet)
 - **Wallet Support**: MetaMask (via Web3.js)
 
 ---
