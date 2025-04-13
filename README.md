@@ -55,3 +55,8 @@ Each location is mapped to **2-decimal precision**, creating a grid system that 
 ```bash
 git clone https://github.com/your-username/pixelparcel.git
 cd pixelparcel
+http-server
+Install Metamask
+Add Wemix Testnet network using chainlist.org
+Get wemix from faucet: https://wallet.test.wemix.com/faucet
+Give location permission on website
