@@ -2,13 +2,13 @@
 <html>
 
 <head>
-  <title>Pixel Parcel</title>
+  <title>Pixel</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     /* Style for the map container */
     #map {
-      height: 76vh; /* Map takes up 2/3 of the page */
+      height: 80vh; /* Map takes up 2/3 of the page */
     }
 
     /* Style for the bottom section where wallet actions are displayed */
@@ -363,14 +363,10 @@
         const y = Math.round(userCoords[1].toFixed(2) * 100);
 
         try {
-            const allLocations = await contract.methods.getAllUserLocations(currentAccount).call();
-            const alreadyClaimed = allLocations.some(([claimedX, claimedY]) => 
-            Number(claimedX) === x && Number(claimedY) === y
-            );
-
-            if (alreadyClaimed) {
-            alert("Current location is owned already.");
-            return;
+            const owner = await contract.methods.locationOwner(x, y).call();
+            if (owner !== "0x0000000000000000000000000000000000000000") {
+                alert("Current location is already claimed.");
+                return;
             }
 
             console.log(`Location claim req at coordinates: (${userCoords[0].toFixed(2)}, ${userCoords[1].toFixed(2)})`);
@@ -378,12 +374,14 @@
             alert("Location Claimed Successful");
         } catch (error) {
             console.error("Error claiming location: ", error);
-            alert("Request Error");
+            alert("Location already claimed");
         }
     }
 
     async function swapLocation(lat,lng) {
-        const web3 = new Web3(window.ethereum);
+        console.log(lat,lng)
+
+    const web3 = new Web3(window.ethereum);
     const contract = new web3.eth.Contract(contractABI, contractAddress);
 
     if (!currentAccount) {
@@ -430,11 +428,14 @@
 
         // Confirm swap with the user
         const confirmSwap = window.confirm(`Do you want to swap owned location (${latOld.toFixed(2)}, ${lngOld.toFixed(2)}) with new location (${lat.toFixed(2)}, ${lng.toFixed(2)})?`);
-
+        console.log(1);
+        const other = await contract.methods.locationOwner(Math.floor(lat * 100), Math.floor(lng * 100)).call();
+        console.log(2);
         if (confirmSwap) {
-            // Call the contract method to swap the location
-            await contract.methods.swapLocation(x, y, lat * 100, lng * 100).send({ from: currentAccount });
+            console.log(x, y, other, lat * 100, lng * 100);
+            await contract.methods.swapLocation(Math.floor(x), Math.floor(y), other, Math.floor(lat * 100), Math.floor(lng * 100)).send({ from: currentAccount });
             alert(`✅ Successfully swapped location: (${latOld.toFixed(2)}, ${lngOld.toFixed(2)}) with (${lat.toFixed(2)}, ${lng.toFixed(2)})`);
+            setTimeout(() => {   window.location.reload(); }, 5000);
         } else {
             alert("Swap cancelled.");
         }
@@ -471,7 +472,7 @@
             return;
         }
         try {
-           
+            console.log(lat, lng);
             await contract.methods.deleteLocation(lat, lng).send({ from: currentAccount, gas: 42703 });
             alert(`Location (${lat}, ${lng}) has been released from ownership.`);
 
